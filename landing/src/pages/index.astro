@@ -1,0 +1,197 @@
+---
+import '../styles/global.css'
+---
+
+<html lang="es">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>VetCare Pro - Tienda de Productos Veterinarios</title>
+		<meta name="description" content="Plataforma integral para clínicas veterinarias con tienda e-commerce de productos para mascotas" />
+	</head>
+	<body class="bg-gray-50">
+		<!-- Navbar -->
+		<nav class="bg-blue-600 text-white sticky top-0 z-50 shadow-lg">
+			<div class="max-w-7xl mx-auto px-4">
+				<div class="flex justify-between items-center h-16">
+					<h1 class="font-bold text-xl">VetCare Pro</h1>
+					<div class="hidden md:flex gap-8">
+						<a href="#features" class="hover:text-blue-100">Características</a>
+						<a href="#tienda" class="hover:text-blue-100">Tienda</a>
+						<a href="#testimonios" class="hover:text-blue-100">Testimonios</a>
+						<a href="http://localhost:3000" class="bg-white text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-50">
+							Acceder
+						</a>
+					</div>
+				</div>
+			</div>
+		</nav>
+
+		<!-- Hero Section -->
+		<section class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20">
+			<div class="max-w-7xl mx-auto px-4 text-center">
+				<h2 class="text-5xl font-bold mb-6">Solución Integral para Clínicas Veterinarias</h2>
+				<p class="text-xl mb-8 text-blue-100">Gestiona tu clínica, agendar citas y vende productos con VetCare Pro</p>
+				<div class="flex justify-center gap-4">
+					<a href="http://localhost:3000/tienda" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50">
+						Explorar Tienda
+					</a>
+					<a href="http://localhost:3000/login" class="border-2 border-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700">
+						Iniciar Sesión
+					</a>
+				</div>
+			</div>
+		</section>
+
+		<!-- Features Section -->
+		<section id="features" class="py-20">
+			<div class="max-w-7xl mx-auto px-4">
+				<h2 class="text-4xl font-bold text-gray-900 text-center mb-12">Características Principales</h2>
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+					<!-- Feature 1 -->
+					<div class="bg-white p-8 rounded-lg shadow-md">
+						<div class="text-4xl mb-4">🏥</div>
+						<h3 class="text-xl font-semibold text-gray-900 mb-4">Gestión Clínica</h3>
+						<p class="text-gray-600">Administra citas, historial médico de mascotas, clientes y servicios veterinarios en una sola plataforma.</p>
+					</div>
+
+					<!-- Feature 2 -->
+					<div class="bg-white p-8 rounded-lg shadow-md">
+						<div class="text-4xl mb-4">🛒</div>
+						<h3 class="text-xl font-semibold text-gray-900 mb-4">Tienda E-Commerce</h3>
+						<p class="text-gray-600">Vende productos para mascotas directamente a tus clientes con sistema de pago integrado con Stripe.</p>
+					</div>
+
+					<!-- Feature 3 -->
+					<div class="bg-white p-8 rounded-lg shadow-md">
+						<div class="text-4xl mb-4">📊</div>
+						<h3 class="text-xl font-semibold text-gray-900 mb-4">Reportes y Analytics</h3>
+						<p class="text-gray-600">Visualiza estadísticas de citas, ventas, clientes y mascotas para tomar mejores decisiones.</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Tienda Section -->
+		<section id="tienda" class="py-20 bg-white">
+			<div class="max-w-7xl mx-auto px-4">
+				<h2 class="text-4xl font-bold text-gray-900 text-center mb-12">Nuestra Tienda Online</h2>
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+					<div>
+						<h3 class="text-2xl font-bold text-gray-900 mb-4">Productos de Calidad para Mascotas</h3>
+						<p class="text-gray-600 mb-4">
+							Accede a una amplia variedad de productos veterinarios y de cuidado para mascotas, directamente desde tu clínica.
+						</p>
+						<ul class="space-y-3 mb-6">
+							<li class="flex items-center gap-3">
+								<span class="text-green-500">✓</span>
+								<span class="text-gray-600">Alimentos especializados</span>
+							</li>
+							<li class="flex items-center gap-3">
+								<span class="text-green-500">✓</span>
+								<span class="text-gray-600">Medicamentos y suplementos</span>
+							</li>
+							<li class="flex items-center gap-3">
+								<span class="text-green-500">✓</span>
+								<span class="text-gray-600">Equipos y accesorios</span>
+							</li>
+							<li class="flex items-center gap-3">
+								<span class="text-green-500">✓</span>
+								<span class="text-gray-600">Pago seguro con Stripe</span>
+							</li>
+						</ul>
+						<a href="http://localhost:3000/tienda" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold">
+							Ir a la Tienda
+						</a>
+					</div>
+					<div class="bg-gray-200 rounded-lg h-64 flex items-center justify-center">
+						<span class="text-gray-500">Galería de Productos</span>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Testimonios -->
+		<section id="testimonios" class="py-20 bg-gray-50">
+			<div class="max-w-7xl mx-auto px-4">
+				<h2 class="text-4xl font-bold text-gray-900 text-center mb-12">Lo que dicen nuestros usuarios</h2>
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+					<div class="bg-white p-8 rounded-lg shadow-md">
+						<p class="text-gray-600 mb-4">
+							"VetCare Pro ha transformado la forma en que gestionamos nuestra clínica. Desde citas hasta ventas, todo en un solo lugar."
+						</p>
+						<p class="font-semibold text-gray-900">Dr. Carlos López - Clínica Veterinaria Central</p>
+					</div>
+
+					<div class="bg-white p-8 rounded-lg shadow-md">
+						<p class="text-gray-600 mb-4">
+							"La tienda e-commerce nos ha permitido incrementar nuestras ventas en un 40%. ¡Excelente herramienta!"
+						</p>
+						<p class="font-semibold text-gray-900">Dra. María García - Pet Care Clinic</p>
+					</div>
+
+					<div class="bg-white p-8 rounded-lg shadow-md">
+						<p class="text-gray-600 mb-4">
+							"El portal para clientes es muy intuitivo. Mis pacientes pueden agendar citas y comprar productos fácilmente."
+						</p>
+						<p class="font-semibold text-gray-900">Dr. Juan Pérez - Veterinaria San Miguel</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- CTA Section -->
+		<section class="bg-blue-600 text-white py-16">
+			<div class="max-w-7xl mx-auto px-4 text-center">
+				<h2 class="text-3xl font-bold mb-4">¿Listo para transformar tu clínica?</h2>
+				<p class="text-blue-100 mb-8 text-lg">Comienza a usar VetCare Pro hoy mismo</p>
+				<div class="flex justify-center gap-4">
+					<a href="http://localhost:3000/login" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50">
+						Iniciar Sesión
+					</a>
+					<a href="http://localhost:3000/tienda" class="border-2 border-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700">
+						Explorar Tienda
+					</a>
+				</div>
+			</div>
+		</section>
+
+		<!-- Footer -->
+		<footer class="bg-gray-900 text-gray-400 py-12">
+			<div class="max-w-7xl mx-auto px-4">
+				<div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+					<div>
+						<h3 class="text-white font-bold mb-4">VetCare Pro</h3>
+						<p class="text-sm">Solución integral para clínicas veterinarias</p>
+					</div>
+					<div>
+						<h4 class="text-white font-semibold mb-4">Producto</h4>
+						<ul class="space-y-2 text-sm">
+							<li><a href="#features" class="hover:text-white">Características</a></li>
+							<li><a href="http://localhost:3000/tienda" class="hover:text-white">Tienda</a></li>
+						</ul>
+					</div>
+					<div>
+						<h4 class="text-white font-semibold mb-4">Empresa</h4>
+						<ul class="space-y-2 text-sm">
+							<li><a href="#" class="hover:text-white">Sobre nosotros</a></li>
+							<li><a href="#" class="hover:text-white">Contacto</a></li>
+						</ul>
+					</div>
+					<div>
+						<h4 class="text-white font-semibold mb-4">Legal</h4>
+						<ul class="space-y-2 text-sm">
+							<li><a href="#" class="hover:text-white">Privacidad</a></li>
+							<li><a href="#" class="hover:text-white">Términos</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="border-t border-gray-800 pt-8 text-center text-sm">
+					<p>&copy; 2025 VetCare Pro. Todos los derechos reservados.</p>
+				</div>
+			</div>
+		</footer>
+	</body>
+</html>

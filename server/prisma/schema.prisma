@@ -1,0 +1,243 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id                Int       @id @default(autoincrement())
+  nombre            String    @db.VarChar(50)
+  apellido          String    @db.VarChar(50)
+  email             String    @unique @db.VarChar(100)
+  password_hash     String    @db.VarChar(255)
+  rol               String    @db.VarChar(20)
+  telefono          String?   @db.VarChar(15)
+  rut               String    @unique @db.VarChar(12)
+  activo            Boolean   @default(true)
+  fecha_creacion    DateTime  @default(now()) @db.Timestamp
+  
+  // Relaciones
+  citas             Cita[]
+  historiales       HistorialMedico[]
+  movimientos       InventarioMovimiento[]
+  
+  @@map("usuarios")
+}
+
+model Cliente {
+  id                Int       @id @default(autoincrement())
+  nombre            String    @db.VarChar(50)
+  apellido          String    @db.VarChar(50)
+  email             String    @unique @db.VarChar(100)
+  password_hash     String?   @db.VarChar(255)  // ← CAMPO NUEVO AGREGADO
+  telefono          String    @db.VarChar(15)
+  direccion         String    @db.VarChar(200)
+  rut               String    @unique @db.VarChar(12)
+  activo            Boolean   @default(true)
+  fecha_registro    DateTime  @default(now()) @db.Timestamp
+  
+  // Relaciones
+  mascotas          Mascota[]
+  citas             Cita[]
+  facturas          Factura[]
+  
+  @@map("clientes")
+}
+
+model Mascota {
+  id                Int       @id @default(autoincrement())
+  id_cliente        Int
+  nombre            String    @db.VarChar(50)
+  especie           String    @db.VarChar(30)
+  raza              String    @db.VarChar(50)
+  fecha_nacimiento  DateTime  @db.Date
+  sexo              String    @db.VarChar(10)
+  color             String    @db.VarChar(30)
+  peso_kg           Decimal   @db.Decimal(5,2)
+  microchip         String?   @db.VarChar(20)
+  foto_url          String?
+  observaciones     String?   @db.Text
+  activo            Boolean   @default(true)
+  fecha_registro    DateTime  @default(now()) @db.Timestamp
+  
+  // Relaciones
+  cliente           Cliente   @relation(fields: [id_cliente], references: [id])
+  citas             Cita[]
+  historiales       HistorialMedico[]
+  
+  @@map("mascotas")
+}
+
+model Cita {
+  id                    Int       @id @default(autoincrement())
+  id_cliente            Int
+  id_mascota            Int
+  id_veterinario        Int?
+  id_servicio           Int       // ← NUEVO: Foreign key
+  fecha_cita            DateTime  @db.Date
+  hora_cita             DateTime  @db.Time
+  estado                String    @db.VarChar(20)
+  estado_pago           String?   @db.VarChar(20) @default("pendiente")
+  motivo_consulta       String?   @db.Text
+  precio_servicio       Decimal   @db.Decimal(10,2)
+  observaciones         String?   @db.Text
+  fecha_creacion        DateTime  @default(now()) @db.Timestamp
+  fecha_modificacion    DateTime? @updatedAt @db.Timestamp
+
+  
+  // Relaciones
+  cliente               Cliente   @relation(fields: [id_cliente], references: [id])
+  mascota               Mascota   @relation(fields: [id_mascota], references: [id])
+  veterinario           Usuario?  @relation(fields: [id_veterinario], references: [id])
+  servicio              Servicio  @relation(fields: [id_servicio], references: [id]) // ← NUEVO
+  historiales           HistorialMedico[]
+  
+  @@map("citas")
+}
+
+model Servicio {
+  id                Int       @id @default(autoincrement())
+  nombre            String    @db.VarChar(100)
+  descripcion       String?   @db.Text
+  precio_base       Decimal   @db.Decimal(10,2)
+  duracion_minutos  Int
+  categoria         String    @db.VarChar(50)
+  activo            Boolean   @default(true)
+  fecha_creacion    DateTime  @default(now()) @db.Timestamp
+  
+  // Relaciones
+  citas             Cita[]    // ← Ahora sí funciona
+  
+  @@map("servicios")
+}
+
+model HistorialMedico {
+  id                Int       @id @default(autoincrement())
+  id_mascota        Int
+  id_cita           Int
+  id_veterinario    Int
+  fecha_atencion    DateTime  @default(now()) @db.Timestamp
+  sintomas          String    @db.Text
+  diagnostico       String    @db.Text
+  tratamiento       String    @db.Text
+  medicamentos      String?   @db.Text
+  peso_actual       Decimal?  @db.Decimal(5,2)
+  temperatura       Decimal?  @db.Decimal(4,1)
+  observaciones     String?   @db.Text
+  recomendaciones   String?   @db.Text
+  proxima_cita      DateTime? @db.Date
+  fecha_creacion    DateTime  @default(now()) @db.Timestamp
+  
+  // Relaciones
+  mascota           Mascota   @relation(fields: [id_mascota], references: [id])
+  cita              Cita      @relation(fields: [id_cita], references: [id])
+  veterinario       Usuario   @relation(fields: [id_veterinario], references: [id])
+  
+  @@map("historiales_medicos")
+}
+
+model Producto {
+  id                Int       @id @default(autoincrement())
+  nombre            String    @db.VarChar(100)
+  descripcion       String?   @db.Text
+  categoria         String    @db.VarChar(50)
+  marca             String?   @db.VarChar(50)
+  unidad_medida     String    @db.VarChar(20)
+  precio_compra     Decimal   @db.Decimal(10,2)
+  precio_venta      Decimal   @db.Decimal(10,2)
+  stock_minimo      Int
+  stock_actual      Int
+  fecha_vencimiento DateTime? @db.Date
+  lote              String?   @db.VarChar(50)
+  proveedor         String?   @db.VarChar(100)
+  activo            Boolean   @default(true)
+  fecha_creacion    DateTime  @default(now()) @db.Timestamp
+  
+  // Relaciones
+  detallesFactura   DetalleFactura[]
+  movimientos       InventarioMovimiento[]
+  
+  @@map("productos")
+}
+
+model Factura {
+  id                Int       @id @default(autoincrement())
+  id_cliente        Int
+  numero_factura    String    @unique @db.VarChar(20)
+  fecha_emision     DateTime  @default(now()) @db.Timestamp
+  subtotal          Decimal   @db.Decimal(10,2)
+  iva               Decimal   @db.Decimal(10,2)
+  impuestos         Decimal   @db.Decimal(10,2)
+  descuento         Decimal   @default(0) @db.Decimal(10,2)
+  total             Decimal   @db.Decimal(10,2)
+  estado_pago       String    @db.VarChar(20)
+  metodo_pago       String    @db.VarChar(20)
+  observaciones     String?   @db.Text
+  
+  // Relaciones
+  cliente           Cliente   @relation(fields: [id_cliente], references: [id])
+  detalles          DetalleFactura[]
+  pagos             Pago[]
+  
+  @@map("facturas")
+}
+
+model DetalleFactura {
+  id                Int       @id @default(autoincrement())
+  id_factura        Int
+  id_producto       Int?
+  id_servicio       Int?
+  descripcion       String    @db.VarChar(200)
+  cantidad          Int
+  precio_unitario   Decimal   @db.Decimal(10,2)
+  subtotal          Decimal   @db.Decimal(10,2)
+  
+  // Relaciones
+  factura           Factura   @relation(fields: [id_factura], references: [id])
+  producto          Producto?  @relation(fields: [id_producto], references: [id])
+  
+  @@map("detalle_facturas")
+}
+
+model Pago {
+  id                Int       @id @default(autoincrement())
+  id_factura        Int?
+  numero_transaccion String?  @db.VarChar(100)
+  metodo_pago       String    @db.VarChar(20)
+  monto             Decimal   @db.Decimal(10,2)
+  estado            String    @db.VarChar(20)
+  fecha_pago        DateTime  @default(now()) @db.Timestamp
+  comprobante_url   String?
+  
+  // Relaciones
+  factura           Factura?   @relation(fields: [id_factura], references: [id])
+  
+  @@map("pagos")
+}
+
+model InventarioMovimiento {
+  id                Int       @id @default(autoincrement())
+  id_producto       Int
+  id_usuario        Int
+  tipo_movimiento   String    @db.VarChar(20)
+  cantidad          Int
+  motivo            String?   @db.VarChar(200)
+  precio_unitario   Decimal?  @db.Decimal(10,2)
+  referencia_id     Int?
+  referencia_tipo   String?   @db.VarChar(20)
+  stock_anterior    Int
+  stock_nuevo       Int
+  fecha_creacion    DateTime  @default(now()) @db.Timestamp
+  
+  // Relaciones
+  producto          Producto  @relation(fields: [id_producto], references: [id])
+  usuario           Usuario   @relation(fields: [id_usuario], references: [id])
+  
+  @@map("inventario_movimientos")
+}

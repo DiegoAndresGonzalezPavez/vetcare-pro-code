@@ -1,0 +1,26 @@
+{
+  "name": "vetcare-pro",
+  "version": "1.0.0",
+  "description": "Sistema integral para clínicas veterinarias con tienda e-commerce",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\" \"npm run dev:landing\"",
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "dev:landing": "cd landing && npm run dev",
+    "build": "cd client && npm install && npm run build",
+    "build:client": "cd client && npm run build",
+    "build:landing": "cd landing && npm run build",
+    "start": "concurrently \"npm run start:server\" \"npm run start:client\"",
+    "start:server": "cd server && npm start",
+    "start:client": "cd client && npm start"
+  },
+  "devDependencies": {
+    "prisma": "^6.16.2",
+    "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.16.2"
+  }
+}
+
